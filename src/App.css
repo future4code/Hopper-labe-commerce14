@@ -115,3 +115,10 @@ header{
 #add-carinho:hover{
   background: hsl(249, 32%, 17%);
 }
+
+
+.button.carrinho{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -9,11 +9,47 @@ import Produto5 from './componentes/imgs/produto5.jpg'
 import Produto6 from './componentes/imgs/produto6.jpg'
 import Produto7 from './componentes/imgs/produto7.jpg'
 import Produto8 from './componentes/imgs/produto8.jpg'
+import  Box  from './componentes/imgs/Box';
 
 
 
 
-function App() {
+class App extends React.Component {
+ state = {
+   camisas: [
+     {id:1 ,valor:50, produto: Produto1, titulo: 'CAMISA ASTRONÔMICA 1' },
+     {id:2 ,valor:55, produto: Produto2, titulo: 'CAMISA ASTRONÔMICA 2'},
+     {id:3, valor:65, produto: Produto3, titulo: 'CAMISA ASTRONÔMICA 3'},
+     {id:4, valor:69, produto: Produto4, titulo: 'CAMISA ASTRONÔMICA 4'},
+     {id:5, valor:100, produto: Produto5, titulo: 'CAMISA ASTRONÔMICA 5'},
+     {id:6, valor:102, produto: Produto6, titulo: 'CAMISA ASTRONÔMICA 6'},
+     {id:7, valor:120, produto: Produto7, titulo: 'CAMISA ASTRONÔMICA 7'},
+     {id:8, valor:129, produto: Produto8, titulo: 'CAMISA ASTRONÔMICA 8'},
+    ],
+    
+    ordemLista:"crescente"
+ }
+ 
+ updateOrdemLista = (evento) => {
+   this.setState({ordemLista: evento.target.value})
+ }
+
+
+
+  render(){
+  const listaDeProdutos = this.state.camisas
+  .sort((a,b)=>{
+    switch (this.state.ordemLista){
+    case "crescente": 
+     return a.titulo.localeCompare(b.titulo);
+     default:
+       return b.titulo.localeCompare(a.titulo)  
+    }
+  })
+  .map(lista => {
+    return <Box produto={lista.produto} valor={lista.valor} titulo={lista.titulo}/>}
+  )
+  
   return (
     <div>
       <header>
@@ -23,7 +59,9 @@ function App() {
         <div className='nav container'>
           <a href='#' className='logo'>LabECommerce</a>
           <box-icon name='shopping-bag' id="cart-icon"></box-icon>
+          
         </div>
+
 
       </header>
 
@@ -31,72 +69,23 @@ function App() {
 
       <section className='loja container'>
         <h2 className='section-title'>Loja de Produtos</h2>
+        <select value={this.state.ordemLista} onChange={this.updateOrdemLista}>
+          <option value='crescente'>Crescente</option>
+          <option value='decrescente'>Decrescente</option>
+        </select>
 
       {/*Conteudo*/}
       
+        {/*box*/}
       <div className='loja-conteudo'>
-        {/*box1*/}
-        <div className='produto-box'>
-          <img src={Produto1} alt='camisa' className='produto' />
-          <h2 className='produto-titulo'>Camisa Astronomous</h2>
-          <span className='price'>R$50</span>
-          <box-icon name='shopping-bag' color='#ffffff' id="add-carinho" ></box-icon>
-        </div>
-        {/*box2*/}
-        <div className='produto-box'>
-          <img src={Produto2} alt='camisa' className='produto' />
-          <h2 className='produto-titulo'>Camisa Astronomous</h2>
-          <span className='price'>R$50</span>
-          <box-icon name='shopping-bag' color='#ffffff' id="add-carinho" ></box-icon>
-        </div>
-        {/*box3*/}
-        <div className='produto-box'>
-          <img src={Produto3} alt='camisa' className='produto' />
-          <h2 className='produto-titulo'>Camisa Astronomous</h2>
-          <span className='price'>R$50</span>
-          <box-icon name='shopping-bag' color='#ffffff' id="add-carinho" ></box-icon>
-        </div>
-        {/*box4*/}
-        <div className='produto-box'>
-          <img src={Produto4} alt='camisa' className='produto' />
-          <h2 className='produto-titulo'>Camisa Astronomous</h2>
-          <span className='price'>R$50</span>
-          <box-icon name='shopping-bag' color='#ffffff' id="add-carinho" ></box-icon>
-        </div>
-        {/*box5*/}
-        <div className='produto-box'>
-          <img src={Produto5} alt='camisa' className='produto' />
-          <h2 className='produto-titulo'>Camisa Astronomous</h2>
-          <span className='price'>R$50</span>
-          <box-icon name='shopping-bag' color='#ffffff' id="add-carinho" ></box-icon>
-        </div>
-        {/*box6*/}
-        <div className='produto-box'>
-          <img src={Produto6} alt='camisa' className='produto' />
-          <h2 className='produto-titulo'>Camisa Astronomous</h2>
-          <span className='price'>R$50</span>
-          <box-icon name='shopping-bag' color='#ffffff' id="add-carinho" ></box-icon>
-        </div>
-        {/*box7*/}
-        <div className='produto-box'>
-          <img src={Produto7} alt='camisa' className='produto' />
-          <h2 className='produto-titulo'>Camisa Astronomous</h2>
-          <span className='price'>R$50</span>
-          <box-icon name='shopping-bag' color='#ffffff' id="add-carinho" ></box-icon>
-        </div>
-        {/*box8*/}
-        <div className='produto-box'>
-          <img src={Produto8} alt='camisa' className='produto' />
-          <h2 className='produto-titulo'>Camisa Astronomous</h2>
-          <span className='price'>R$50</span>
-          <box-icon name='shopping-bag' color='#ffffff' id="add-carinho" ></box-icon>
-        </div>
-
+          {listaDeProdutos}
+          {console.log(this.state.camisas)}
+        
       </div>
 
       </section>
     </div>
   );
-}
+}}
 
 export default App;
