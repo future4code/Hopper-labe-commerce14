@@ -17,27 +17,49 @@ import  Box  from './componentes/imgs/Box';
 class App extends React.Component {
  state = {
    camisas: [
-     {id:1 ,valor:50, produto: Produto1, titulo: 'CAMISA ASTRONÔMICA 1' },
-     {id:2 ,valor:55, produto: Produto2, titulo: 'CAMISA ASTRONÔMICA 2'},
-     {id:3, valor:65, produto: Produto3, titulo: 'CAMISA ASTRONÔMICA 3'},
-     {id:4, valor:69, produto: Produto4, titulo: 'CAMISA ASTRONÔMICA 4'},
-     {id:5, valor:100, produto: Produto5, titulo: 'CAMISA ASTRONÔMICA 5'},
-     {id:6, valor:102, produto: Produto6, titulo: 'CAMISA ASTRONÔMICA 6'},
-     {id:7, valor:120, produto: Produto7, titulo: 'CAMISA ASTRONÔMICA 7'},
-     {id:8, valor:129, produto: Produto8, titulo: 'CAMISA ASTRONÔMICA 8'},
+     {id:1 ,valor:50, produto: Produto1, titulo: 'CAMISA SKATEASTRO'},
+     {id:2 ,valor:55, produto: Produto2, titulo: 'CAMISA SPACE'},
+     {id:3, valor:65, produto: Produto3, titulo: 'CAMISA ASTRONÔMICA 1'},
+     {id:4, valor:69, produto: Produto4, titulo: 'CAMISA ASTRONÔMICA 2'},
+     {id:5, valor:100, produto: Produto5, titulo: 'CAMISA SURFSPACE'},
+     {id:6, valor:102, produto: Produto6, titulo: 'CAMISA TO EARTH'},
+     {id:7, valor:120, produto: Produto7, titulo: 'CAMISA AROUND TO WORLD'},
+     {id:8, valor:129, produto: Produto8, titulo: 'CAMISA GET TO WORLD'},
     ],
-    
-    ordemLista:"crescente"
+    pesquisar:"",
+    ordemLista:"crescente",
+    preçoMinimo:"",
+    preçoMaximo:""
  }
  
- updateOrdemLista = (evento) => {
-   this.setState({ordemLista: evento.target.value})
+ updateOrdemLista = (event) => {
+   this.setState({ordemLista: event.target.value})
  }
+
+ PesquisarCamisas = (event) => {
+   this.setState({pesquisar: event.target.value})
+ }
+
+ PreçoMinimo = (event) => {
+  this.setState({preçoMinimo: event.target.value})
+}
+PreçoMaximo = (event) => {
+  this.setState({preçoMaximo: event.target.value})
+}
 
 
 
   render(){
   const listaDeProdutos = this.state.camisas
+  .filter(lista =>{
+    return lista.titulo.toLocaleLowerCase().includes(this.state.pesquisar.toLocaleLowerCase())
+  })
+  .filter(lista =>{
+    return this.state.preçoMinimo === "" || lista.valor >= this.state.preçoMinimo
+  })
+  .filter(lista =>{
+    return this.state.preçoMaximo === "" || lista.valor <= this.state.preçoMaximo
+  })
   .sort((a,b)=>{
     switch (this.state.ordemLista){
     case "crescente": 
@@ -61,18 +83,27 @@ class App extends React.Component {
           <box-icon name='shopping-bag' id="cart-icon"></box-icon>
           
         </div>
-
-
-      </header>
-
-      {/*Ecommerce*/}
-
-      <section className='loja container'>
-        <h2 className='section-title'>Loja de Produtos</h2>
+        <div className='CampoDePesquisa'>
+        <input placeholder='Pesquisar' value={this.state.pesquisar} onChange={this.PesquisarCamisas}/>
+        <input type= "number" placeholder='Preço minimo' value={this.state.preçoMinimo} onChange={this.PreçoMinimo}/>
+        <input type="number" placeholder='Preço maximo' value={this.state.preçoMaximo} onChange={this.PreçoMaximo}/>
+        
+        
         <select value={this.state.ordemLista} onChange={this.updateOrdemLista}>
           <option value='crescente'>Crescente</option>
           <option value='decrescente'>Decrescente</option>
         </select>
+        </div>
+      </header>
+      
+
+      
+
+      {/*Ecommerce*/}
+
+      <section className='loja container'>
+               
+        <h2 className='section-title'>Loja de Produtos</h2>
 
       {/*Conteudo*/}
       
@@ -84,6 +115,7 @@ class App extends React.Component {
       </div>
 
       </section>
+      
     </div>
   );
 }}
