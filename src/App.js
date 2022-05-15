@@ -10,6 +10,7 @@ import Produto6 from './componentes/imgs/produto6.jpg'
 import Produto7 from './componentes/imgs/produto7.jpg'
 import Produto8 from './componentes/imgs/produto8.jpg'
 import  Box  from './componentes/imgs/Box';
+import Carrinho from './componentes/imgs/Carrinho';
 
 
 
@@ -26,13 +27,24 @@ class App extends React.Component {
      {id:7, valor:120, produto: Produto7, titulo: 'CAMISA AROUND TO WORLD'},
      {id:8, valor:129, produto: Produto8, titulo: 'CAMISA GET TO WORLD'},
     ],
+    carrinho: [],
     pesquisar:"",
     ordemLista:"crescente",
     preçoMinimo:"",
     preçoMaximo:""
  }
  
- updateOrdemLista = (event) => {
+ updateAddCarrinho = (ref)=>{
+  const filtro = this.state.camisas.filter((id)=>{return ref === id.id})
+
+  const novoCarrinho = [...this.state.carrinho,filtro]
+  
+  this.setState({carrinho:novoCarrinho})
+  
+}
+ 
+
+updateOrdemLista = (event) => {
    this.setState({ordemLista: event.target.value})
  }
 
@@ -63,13 +75,13 @@ PreçoMaximo = (event) => {
   .sort((a,b)=>{
     switch (this.state.ordemLista){
     case "crescente": 
-     return a.titulo.localeCompare(b.titulo);
+     return a.valor-b.valor;
      default:
-       return b.titulo.localeCompare(a.titulo)  
+       return b.valor-a.valor  
     }
   })
   .map(lista => {
-    return <Box produto={lista.produto} valor={lista.valor} titulo={lista.titulo}/>}
+    return <Box id={lista.id}  produto={lista.produto} valor={lista.valor} titulo={lista.titulo} funcao={this.updateAddCarrinho}/>}
   )
   
   return (
@@ -110,7 +122,7 @@ PreçoMaximo = (event) => {
         {/*box*/}
       <div className='loja-conteudo'>
           {listaDeProdutos}
-          {console.log(this.state.camisas)}
+          {console.log(this.state.carrinho)}
         
       </div>
 
