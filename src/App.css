@@ -11,7 +11,7 @@ img{
 
 body{
   color: var(--text-color);
-  background-color: rgb(156, 199, 184);
+  background-color: #fff;
   
 }
 
@@ -139,4 +139,50 @@ header{
   margin-left: 20px;
   
 
+}
+
+.button-add-carrinho{
+  background-color: #fff;
+  border-color: #fff;
+  box-shadow: #fff;
+  color: #fff;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  
+}
+
+
+.button-header{
+  background-color: rgb(50, 131, 120);
+  border-color: rgb(50, 131, 120);
+  
+}
+
+.card-item{
+  display: flex;
+  
+
+}
+
+.card-item-modifica{
+  display: flex;
+  width: 50px;
+  height: 30px;
+}
+
+.card-item-menos{
+  width: 25px;
+  height: 20px;
+}
+
+.card-item-mais{
+  width: 25px;
+  height: 20px;
+}
+
+.card-item-qt{
+  margin-left: 15px;
+  margin-right: 15px;
+  align-items: flex-start;
 }
